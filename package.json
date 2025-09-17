@@ -1,0 +1,21 @@
+{
+  "name": "redsocial-monolith",
+  "version": "1.0.0",
+  "description": "Red Social - Monolito Frontend Angular + Backend Spring Boot",
+  "scripts": {
+    "install-all": "cd backend && mvn clean install && cd ../frontend/redsocial-frontend && npm install",
+    "start-backend": "cd backend && mvn spring-boot:run",
+    "start-frontend": "cd frontend/redsocial-frontend && npm start",
+    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
+    "build-backend": "cd backend && mvn clean package",
+    "build-frontend": "cd frontend/redsocial-frontend && npm run build",
+    "build": "npm run build-backend && npm run build-frontend",
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"blue,green\" \"npm run start-backend\" \"npm run start-frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["red-social", "spring-boot", "angular", "jwt", "postgresql"],
+  "author": "Tu nombre",
+  "license": "MIT"
+}
