@@ -1,0 +1,161 @@
+<div class="post-list-container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        
+        <!-- Loading State -->
+        <div *ngIf="loading" class="text-center py-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+          <p class="mt-2 text-muted">Cargando publicaciones...</p>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error" class="alert alert-danger" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {{ error }}
+          <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="loadPosts()">
+            <i class="fas fa-retry me-1"></i>Reintentar
+          </button>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="!loading && !error && posts.length === 0" class="text-center py-5">
+          <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
+          <h5 class="text-muted">No hay publicaciones aún</h5>
+          <p class="text-muted">¡Sé el primero en compartir algo!</p>
+        </div>
+
+        <!-- Posts List -->
+        <div *ngIf="!loading && !error && posts.length > 0">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0">
+              <i class="fas fa-home me-2 text-primary"></i>
+              Inicio
+            </h4>
+            <button class="btn btn-outline-primary btn-sm" (click)="loadPosts()">
+              <i class="fas fa-sync-alt me-1"></i>
+              Actualizar
+            </button>
+          </div>
+
+          <!-- Individual Post Cards -->
+          <div *ngFor="let post of posts; trackBy: trackByPostId" class="post-card mb-4">
+            <div class="card shadow-sm border-0">
+              
+              <!-- Post Header -->
+              <div class="card-header bg-white border-0 pb-0">
+                <div class="d-flex align-items-center">
+                  <div class="profile-avatar me-3">
+                    <img 
+                      [src]="post.user.profileImageUrl || 'default-avatar.svg'" 
+                      [alt]="post.user.firstName + ' ' + post.user.lastName"
+                      class="rounded-circle"
+                      width="45"
+                      height="45"
+                      onerror="this.src='https://via.placeholder.com/45/007bff/ffffff?text=' + this.alt.charAt(0)"
+                    >
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-0 fw-bold">
+                      {{ post.user.firstName }} {{ post.user.lastName }}
+                    </h6>
+                    <small class="text-muted">
+                      <i class="fas fa-at me-1"></i>{{ post.user.username }}
+                    </small>
+                  </div>
+                  <small class="text-muted">
+                    <i class="fas fa-clock me-1"></i>
+                    {{ formatDate(post.createdAt) }}
+                  </small>
+                </div>
+              </div>
+
+              <!-- Post Content -->
+              <div class="card-body">
+                <p class="card-text mb-3" [innerHTML]="post.content"></p>
+                
+                <!-- Post Image (if exists) -->
+                <div *ngIf="post.imageUrl" class="post-image mb-3">
+                  <img 
+                    [src]="post.imageUrl" 
+                    [alt]="'Imagen de ' + post.user.username"
+                    class="img-fluid rounded"
+                    style="max-height: 400px; width: 100%; object-fit: cover;"
+                  >
+                </div>
+              </div>
+
+              <!-- Post Actions -->
+              <div class="card-footer bg-white border-0 pt-0">
+                <div class="d-flex align-items-center justify-content-between">
+                  
+                  <!-- Like Button & Count -->
+                  <div class="d-flex align-items-center">
+                    <button 
+                      class="btn btn-sm me-2"
+                      [class.btn-danger]="post.likedByCurrentUser"
+                      [class.btn-outline-danger]="!post.likedByCurrentUser"
+                      (click)="toggleLike(post.id)"
+                      [disabled]="!getCurrentUser()"
+                    >
+                      <i class="fas fa-heart me-1"></i>
+                      {{ post.likeCount || 0 }}
+                    </button>
+                    
+                    <!-- Comments Button (future feature) -->
+                    <button class="btn btn-sm btn-outline-secondary me-2" disabled>
+                      <i class="fas fa-comment me-1"></i>
+                      0
+                    </button>
+                    
+                    <!-- Share Button (future feature) -->
+                    <button class="btn btn-sm btn-outline-secondary" disabled>
+                      <i class="fas fa-share me-1"></i>
+                    </button>
+                  </div>
+
+                  <!-- Post Options -->
+                  <div class="dropdown" *ngIf="getCurrentUser()?.id === post.user.id">
+                    <button 
+                      class="btn btn-sm btn-outline-secondary dropdown-toggle" 
+                      type="button" 
+                      [id]="'dropdownMenuButton-' + post.id"
+                      data-bs-toggle="dropdown" 
+                      aria-expanded="false"
+                    >
+                      <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <ul class="dropdown-menu" [attr.aria-labelledby]="'dropdownMenuButton-' + post.id">
+                      <li>
+                        <a class="dropdown-item" href="#" (click)="$event.preventDefault()">
+                          <i class="fas fa-edit me-2"></i>Editar
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-danger" href="#" (click)="$event.preventDefault()">
+                          <i class="fas fa-trash me-2"></i>Eliminar
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Likes Details -->
+                <div *ngIf="post.likeCount && post.likeCount > 0" class="mt-2">
+                  <small class="text-muted">
+                    <i class="fas fa-heart text-danger me-1"></i>
+                    <span *ngIf="post.likeCount === 1">1 persona</span>
+                    <span *ngIf="post.likeCount > 1">{{ post.likeCount }} personas</span>
+                    dieron me gusta
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

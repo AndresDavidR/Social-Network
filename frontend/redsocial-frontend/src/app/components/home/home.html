@@ -1,0 +1,15 @@
+<div class="home-container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        
+        <!-- Create Post Component -->
+        <app-create-post (postCreated)="onPostCreated()"></app-create-post>
+        
+        <!-- Posts List Component -->
+        <app-post-list></app-post-list>
+        
+      </div>
+    </div>
+  </div>
+</div>
