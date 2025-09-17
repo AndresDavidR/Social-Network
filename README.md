@@ -1,9 +1,19 @@
-# Red Social Backend - Spring Boot
+# Red Social - Full Stack Application
 
-Backend para una aplicación de red social desarrollada con Java Spring Boot, que proporciona una API REST completa para gestionar usuarios, publicaciones y sistema de likes.
+Aplicación completa de red social desarrollada con **Angular** (frontend) y **Spring Boot** (backend), que proporciona una experiencia interactiva con actualizaciones en tiempo real.
 
 ## 🚀 Características
 
+### Frontend (Angular)
+- **Interfaz Moderna**: UI responsiva compatible con móvil y desktop
+- **Autenticación JWT**: Login y registro de usuarios
+- **Feed Interactivo**: Ver y crear publicaciones en tiempo real
+- **Sistema de Likes**: Dar like con actualizaciones instantáneas vía WebSocket
+- **Perfiles de Usuario**: Ver y editar perfiles de usuario
+- **Navegación Intuitiva**: Barra de navegación con opciones contextuales
+
+### Backend (Spring Boot)
+- **API REST Completa**: Endpoints documentados con Swagger
 - **Autenticación JWT**: Sistema de login y registro seguro
 - **CRUD de Publicaciones**: Crear, leer, actualizar y eliminar posts
 - **Sistema de Likes**: Los usuarios pueden dar like a las publicaciones
@@ -13,11 +23,21 @@ Backend para una aplicación de red social desarrollada con Java Spring Boot, qu
 - **WebSocket**: Actualizaciones en tiempo real para likes
 - **Base de Datos H2**: En memoria, sin configuración externa requerida
 - **Documentación Swagger**: API completamente documentada
-- **Frontend Angular**: Interfaz de usuario completa e interactiva
-- **Ejecución Integrada**: Un solo comando para ejecutar todo el proyecto
+
+### Integración Full Stack
+- **Ejecución Unificada**: Un solo comando para ejecutar frontend y backend
+- **WebSocket**: Comunicación en tiempo real entre frontend y backend
+- **Autenticación**: JWT compartido entre ambas aplicaciones
 
 ## 🛠️ Tecnologías
 
+### Frontend
+- **Angular 17+** con TypeScript
+- **RxJS** para programación reactiva
+- **WebSocket** con STOMP para tiempo real
+- **SCSS** para estilos responsivos
+
+### Backend
 - **Java 17**
 - **Spring Boot 3.2.10**
 - **Spring Security** con JWT
@@ -26,8 +46,10 @@ Backend para una aplicación de red social desarrollada con Java Spring Boot, qu
 - **Maven**
 - **WebSocket** con STOMP para actualizaciones en tiempo real
 - **Swagger/OpenAPI 3** para documentación de API
-- **Angular 17+** para el frontend
+
+### Herramientas de Desarrollo
 - **Concurrently** para ejecutar backend y frontend simultáneamente
+- **Node.js** y **npm** para gestión de dependencias del frontend
 
 ## 📋 Requisitos Previos
 
@@ -112,17 +134,23 @@ npm run build        # Compilar backend y frontend para producción
 
 El frontend Angular incluye las siguientes páginas y componentes:
 
-### Páginas principales:
-- **Login/Registro**: Autenticación de usuarios
-- **Feed Principal**: Lista de todas las publicaciones
-- **Crear Publicación**: Formulario para nuevos posts
-- **Perfil de Usuario**: Información y publicaciones del usuario
+### 🎯 Páginas Principales
+- **Login/Registro**: Autenticación de usuarios con validación
+- **Feed Principal**: Lista de todas las publicaciones con scroll infinito
+- **Crear Publicación**: Formulario para nuevos posts con soporte para imágenes
+- **Perfil de Usuario**: Información y publicaciones del usuario con opción de edición
 
-### Componentes:
-- **Navbar**: Barra de navegación con opciones de usuario
-- **Post List**: Lista de publicaciones con likes en tiempo real
+### 🧩 Componentes
+- **Navbar**: Barra de navegación con opciones de usuario autenticado
+- **Post List**: Lista de publicaciones con likes en tiempo real vía WebSocket
 - **Create Post**: Formulario para crear nuevas publicaciones
-- **Profile**: Perfil de usuario con edición de información
+- **Profile**: Perfil de usuario con edición de información personal
+
+### ⚡ Funcionalidades Interactivas
+- **Likes en Tiempo Real**: Actualizaciones instantáneas sin recargar la página
+- **Navegación SPA**: Experiencia de Single Page Application fluida
+- **Responsive Design**: Compatible con dispositivos móviles y desktop
+- **Autenticación Persistente**: Sesión mantenida con JWT tokens
 
 ## 🧪 Datos de Prueba
 
@@ -191,31 +219,51 @@ export const environment = {
 ## 🏗️ Estructura del Proyecto
 
 ```
-src/main/java/com/redsocial/backend/
-├── config/          # Configuraciones (CORS, Seeder, WebSocket, Swagger)
-├── controller/      # Controladores REST y WebSocket
-├── dto/            # Data Transfer Objects
-├── model/          # Entidades JPA
-├── repository/     # Repositorios de datos
-├── security/       # Configuración de seguridad JWT
-└── service/        # Lógica de negocio
-
-src/app/ (Frontend Angular)
-├── components/     # Componentes de la aplicación
-├── services/       # Servicios para API y WebSocket
-├── models/         # Interfaces y modelos TypeScript
-├── guards/         # Guards de autenticación
-└── interceptors/   # Interceptores HTTP
+Social-Network/
+├── package.json                    # Scripts para ejecutar todo el proyecto
+├── README.md                       # Documentación principal
+├── SETUP.md                        # Guía de configuración detallada
+│
+├── backend/                        # Backend Spring Boot
+│   ├── pom.xml                    # Dependencias Maven
+│   └── src/main/java/com/redsocial/backend/
+│       ├── config/                # Configuraciones (CORS, Seeder, WebSocket, Swagger)
+│       ├── controller/            # Controladores REST y WebSocket
+│       ├── dto/                   # Data Transfer Objects
+│       ├── model/                 # Entidades JPA
+│       ├── repository/            # Repositorios de datos
+│       ├── security/              # Configuración de seguridad JWT
+│       └── service/               # Lógica de negocio
+│
+└── frontend/redsocial-frontend/   # Frontend Angular
+    ├── src/app/
+    │   ├── components/            # Componentes de la aplicación
+    │   │   ├── login/            # Página de inicio de sesión
+    │   │   ├── register/         # Página de registro
+    │   │   ├── home/             # Feed principal
+    │   │   ├── post-list/        # Lista de publicaciones
+    │   │   ├── create-post/      # Crear nueva publicación
+    │   │   ├── profile/          # Perfil de usuario
+    │   │   └── navbar/           # Barra de navegación
+    │   ├── services/             # Servicios para API y WebSocket
+    │   │   ├── auth.service.ts   # Autenticación JWT
+    │   │   ├── post.service.ts   # Gestión de publicaciones
+    │   │   ├── user.service.ts   # Gestión de usuarios
+    │   │   └── websocket.service.ts # WebSocket para tiempo real
+    │   ├── models/               # Interfaces y modelos TypeScript
+    │   ├── guards/               # Guards de autenticación
+    │   └── interceptors/         # Interceptores HTTP
+    └── public/                   # Recursos estáticos
 ```
 
 ## 🚀 Próximos Pasos
 
-El proyecto está completo y listo para usar. Para continuar el desarrollo:
+El proyecto está completo y listo para usar. Para continuar el desarrollo, considera estas mejoras:
 
-### Funcionalidades adicionales que puedes implementar:
+### 🔧 Funcionalidades Sugeridas
 
+#### Sistema de Comentarios
 ```typescript
-// Comentarios en publicaciones
 interface Comment {
   id: number;
   content: string;
@@ -223,15 +271,19 @@ interface Comment {
   post: Post;
   createdAt: Date;
 }
+```
 
-// Sistema de seguimiento
+#### Sistema de Seguimiento
+```typescript
 interface Follow {
   follower: User;
   following: User;
   createdAt: Date;
 }
+```
 
-// Notificaciones en tiempo real
+#### Notificaciones en Tiempo Real
+```typescript
 interface Notification {
   id: number;
   type: 'like' | 'comment' | 'follow';
@@ -241,14 +293,39 @@ interface Notification {
 }
 ```
 
-### Mejoras sugeridas:
-1. **Comentarios**: Sistema de comentarios en publicaciones
-2. **Seguir usuarios**: Poder seguir/dejar de seguir usuarios
-3. **Feed personalizado**: Mostrar solo publicaciones de usuarios seguidos
-4. **Notificaciones push**: Notificaciones en tiempo real
-5. **Subida de imágenes**: Permitir subir imágenes a las publicaciones
+### 🎯 Mejoras Recomendadas
+1. **Comentarios en Publicaciones**: Sistema completo de comentarios
+2. **Seguir Usuarios**: Poder seguir/dejar de seguir usuarios
+3. **Feed Personalizado**: Mostrar solo publicaciones de usuarios seguidos
+4. **Notificaciones Push**: Notificaciones en tiempo real con WebSocket
+5. **Subida de Archivos**: Permitir subir imágenes a las publicaciones
 6. **PWA**: Convertir en Progressive Web App
-7. **Tests**: Agregar tests unitarios y e2e completos
+7. **Tests Completos**: Agregar tests unitarios y e2e para frontend y backend
+8. **Docker**: Containerización para despliegue fácil
+9. **CI/CD**: Pipeline de integración y despliegue continuo
+
+### 🔄 Desarrollo Frontend
+Para trabajar específicamente en el frontend:
+
+```bash
+# Navegar al directorio del frontend
+cd frontend/redsocial-frontend
+
+# Generar nuevos componentes
+ng generate component nombre-componente
+
+# Ejecutar solo el frontend (requiere backend activo)
+ng serve
+
+# Compilar para producción
+ng build --prod
+
+# Ejecutar tests
+ng test
+
+# Tests end-to-end
+ng e2e
+```
 
 ## 📄 Licencia
 
