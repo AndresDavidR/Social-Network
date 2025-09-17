@@ -1,0 +1,7 @@
+<!-- Simple default avatar SVG -->
+<svg width="45" height="45" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="22.5" cy="22.5" r="22.5" fill="#007bff"/>
+  <circle cx="22.5" cy="18" r="6" fill="white"/>
+  <path d="M7 37c0-8.5 7-15.5 15.5-15.5S38 28.5 38 37" fill="white"/>
+  <text x="22.5" y="29" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">U</text>
+</svg>

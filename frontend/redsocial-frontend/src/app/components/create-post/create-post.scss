@@ -1,0 +1,221 @@
+.create-post-container {
+  margin-bottom: 2rem;
+
+  .card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+  }
+
+  .card-header {
+    padding: 1.25rem 1.25rem 1rem;
+    
+    .profile-avatar img {
+      border: 2px solid #e9ecef;
+      transition: border-color 0.3s ease;
+      
+      &:hover {
+        border-color: #007bff;
+      }
+    }
+  }
+
+  .card-body {
+    padding: 0.5rem 1.25rem 1rem;
+  }
+
+  .form-control {
+    font-size: 1rem;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    
+    &.border-0 {
+      box-shadow: none;
+      
+      &:focus {
+        box-shadow: none;
+        border: none;
+        outline: none;
+      }
+    }
+    
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  textarea.form-control {
+    resize: none;
+    min-height: 100px;
+    
+    &::placeholder {
+      color: #adb5bd;
+      font-style: italic;
+    }
+  }
+
+  .character-count {
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .input-group {
+    .input-group-text {
+      border: 1px solid #dee2e6;
+      
+      &.bg-light {
+        background-color: #f8f9fa !important;
+      }
+    }
+    
+    .form-control {
+      &.border-start-0 {
+        border-left: none;
+        
+        &:focus {
+          border-left: none;
+        }
+      }
+    }
+  }
+
+  .image-preview {
+    img {
+      border: 2px solid #e9ecef;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        border-color: #007bff;
+      }
+    }
+    
+    .position-relative {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+
+  .post-options {
+    border-top: 1px solid #e9ecef;
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .card-footer {
+    padding: 0.75rem 1.25rem 1.25rem;
+    
+    .post-actions {
+      .btn {
+        border-radius: 20px;
+        font-size: 0.875rem;
+        padding: 0.375rem 0.75rem;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-1px);
+        }
+        
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+    
+    .submit-actions {
+      .btn {
+        border-radius: 25px;
+        font-weight: 500;
+        padding: 0.5rem 1.25rem;
+        transition: all 0.3s ease;
+        
+        &:hover:not(:disabled) {
+          transform: translateY(-1px);
+        }
+        
+        &.btn-primary {
+          background: linear-gradient(45deg, #007bff, #0056b3);
+          border: none;
+          
+          &:hover:not(:disabled) {
+            background: linear-gradient(45deg, #0056b3, #004085);
+          }
+          
+          &:disabled {
+            background: #6c757d;
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+
+  .alert {
+    border-radius: 10px;
+    border: none;
+    
+    &.alert-success {
+      background: linear-gradient(45deg, #d4edda, #c3e6cb);
+      color: #155724;
+    }
+    
+    &.alert-danger {
+      background: linear-gradient(45deg, #f8d7da, #f5c6cb);
+      color: #721c24;
+    }
+  }
+
+  .spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  // Animation for form focus
+  .form-control:focus {
+    animation: glow 0.3s ease-in-out;
+  }
+
+  @keyframes glow {
+    0% {
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    .card-header,
+    .card-body,
+    .card-footer {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .post-actions {
+      display: none; // Hide optional actions on mobile
+    }
+    
+    .submit-actions {
+      width: 100%;
+      
+      .btn {
+        flex: 1;
+        
+        &:first-child {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+    
+    textarea.form-control {
+      min-height: 80px;
+    }
+  }
+}
